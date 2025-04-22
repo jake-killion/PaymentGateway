@@ -24,15 +24,11 @@ namespace PaymentGateway.Api.Services
         public async Task<AcquiringBankResponse> Authorize(AcquiringBankRequest request)
         {
             HttpClient httpClient = _httpClientFactory.CreateClient();
-            HttpResponseMessage response = await httpClient.PostAsync(
-                _apiUrl + "/payments",
-                new StringContent(
-                JsonSerializer.Serialize(request),
-                Encoding.UTF8,
-                "application/Json"));
+            HttpResponseMessage response = await httpClient.PostAsync(_apiUrl + "/payments", new StringContent( JsonSerializer.Serialize(request), Encoding.UTF8, "application/Json"));
 
             if (!response.IsSuccessStatusCode)
             {
+                // This would be done nicer in a real application however it works for this instance
                 throw new Exception("Error calling Acquiring Bank API: " + response.ReasonPhrase);
             }
 
