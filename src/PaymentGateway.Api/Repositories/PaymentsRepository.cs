@@ -4,6 +4,8 @@ using PaymentGateway.Api.Repositories.Interfaces;
 
 namespace PaymentGateway.Api.Repositories;
 
+// In practice, this would be done using either entity framework or Dapper however 
+// I will simply use a list of objects to simulate a database for this instance
 public class PaymentsRepository : IPaymentsRepository
 {  
     public async Task Add(PostPaymentResponse payment)
@@ -14,6 +16,8 @@ public class PaymentsRepository : IPaymentsRepository
     public async Task<GetPaymentResponse> Get(Guid id)
     {
         // Did it this way only so i could reuse the same sample data
+        // however in practice, I would have it return a GetPaymentResponse
+        // from the db rather than having to convert it
         PostPaymentResponse payment = _payments.FirstOrDefault(p => p.Id == id);
         return payment?.ToGetPaymentResponse();
     }

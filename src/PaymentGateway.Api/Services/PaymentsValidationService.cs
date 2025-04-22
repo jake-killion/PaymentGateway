@@ -10,6 +10,7 @@ namespace PaymentGateway.Api.Services
             "USD", "EUR", "GBP"
         ];
 
+        // Would like to clean this up to make it prettier and more readable however this is a simple example
         public List<string> Validate(PostPaymentRequestMessage request)
         {
             List<string> errors = [];
@@ -60,22 +61,26 @@ namespace PaymentGateway.Api.Services
             return errors;
         }
 
+        // Ensures the month is between 1 and 12
         private bool ExpiryMonthIsValid(int month)
         {
             return month >= 1 && month <= 12;
         }
 
+        // Ensures the year is a 4-digit number
         private bool ExpiryYearIsValid(int year)
         {
             return year >= 1000 && year <= 9999;
         }
 
+        // Ensures the expiration date is in the future
         private bool ExpirationDateIsValid(int month, int year)
         {
             DateTime expirationDate = new DateTime(year, month, 1);
             return expirationDate.Date > DateTime.Now.Date;
         }
 
+        // Ensures the CVV is a 3 or 4 digit number
         private bool CvvIsValid(string cvv)
         {
             return int.TryParse(cvv, out _) 
@@ -83,6 +88,7 @@ namespace PaymentGateway.Api.Services
                 || cvv.Length == 4);
         }
 
+        // Ensures the card number is numeric and between 14 and 19 digits
         private bool CardNumberIsValid(string cardNumber)
         {
             return long.TryParse(cardNumber, out _)
@@ -90,11 +96,13 @@ namespace PaymentGateway.Api.Services
                 && cardNumber.Length <= 19;
         }
 
+        // Ensures the amount is a positive integer
         private bool AmountIsValid(int amount)
         {
             return amount > 0;
         }
 
+        // Ensures the currency is a valid ISO currency code
         private bool CurrencyIsValid(string currency)
         {
             return currency.Length == 3 && ValidCurrencyCodes.Contains(currency);

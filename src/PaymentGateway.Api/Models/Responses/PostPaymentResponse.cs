@@ -10,6 +10,7 @@ public class PostPaymentResponse
     public string Currency { get; set; }
     public int Amount { get; set; }
 
+    // Easily converts PostPaymentResponse to PostPaymentRequest
     public GetPaymentResponse ToGetPaymentResponse()
     {
         return new GetPaymentResponse

@@ -20,6 +20,8 @@ namespace PaymentGateway.Api.Services
 
         public async Task<ProcessPaymentResponse> Process(PostPaymentRequestMessage request)
         {
+            // Validates the request (e.g. card number, expiry date, etc.)
+            // Would like to seperate this into its own method but this is a simple example
             List<string> validationErrors = _paymentsValidationService.Validate(request);
             PostPaymentResponse responsePayment = request.ToResponse();
             if (validationErrors.Count > 0)
@@ -34,8 +36,8 @@ namespace PaymentGateway.Api.Services
                 };
             }
 
-            // The below lines 39-50 will cause errors as no valid bank api url provided (this section is mostly for POC purposes)
-            // Commenting them will run the application with no errors
+            // If the request is valid, we send it to the acquiring bank
+            // Also would like to separate this into its own method but this is a simple example
             AcquiringBankRequest acquiringBankRequest = request.ToAcquiringBankRequest();
             AcquiringBankResponse acquiringBankResponse = await _acquiringBankService.Authorize(acquiringBankRequest);
             if (acquiringBankResponse.Authorized == false)

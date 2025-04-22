@@ -4,6 +4,7 @@ namespace PaymentGateway.Api.Models.Requests
 {
     public class AcquiringBankRequest
     {
+        // JsonPropertyName is used to map the C# property names to the JSON property names
         [JsonPropertyName("card_number")]
         public string CardNumber { get; set; }
 

@@ -25,6 +25,7 @@ namespace PaymentGateway.Api.Models.Requests
             };
         }
 
+        // This method easily converts the PostPaymentRequestMessage to an AcquiringBankRequest
         public AcquiringBankRequest ToAcquiringBankRequest()
         {
             return new AcquiringBankRequest
